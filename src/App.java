@@ -91,7 +91,7 @@ public class App {
                         </div>
 
                         <div class="card">
-                            <h3>Ver Ver Lista de Animais </h3>
+                            <h3>Ver Lista de Animais </h3>
                             <p>Consultar lista completa</p>
                             <a href="/animaislista">Abrir</a>
                         </div>
@@ -665,7 +665,7 @@ public class App {
 
             try {
                 Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("SELECT * FROM animaislista");
+                ResultSet rs = st.executeQuery("SELECT * FROM Animais");
 
                 while (rs.next()) {
                     int id = rs.getInt("id");
@@ -728,15 +728,15 @@ public class App {
 
                 <a href='/animaislista'>← Voltar à lista</a><br><br>
 
-                <form method='POST' action='/guardar'>
+                <form method='POST' action='/guardaranimais'>
                     NumeroCA :
-                    <input name='NumeroCA'type= 'number' min=0 required>
+                    <input name='NumeroCA' required>
 
                     NomeAnimal:
                     <input name='nomeAnimal' required>
 
-                    dataNascimento :
-                    <input name='dataNascimento 'required>
+                    dataNascimento:
+                    <input name='dataNascimento'required>
 
                     <button type='submit'>Guardar</button>
                 </form>
@@ -779,7 +779,7 @@ public class App {
                         String value = java.net.URLDecoder.decode(kv[1], "UTF-8");
 
                         switch (key) {
-                            case "numeroCA": numeroCA = 0;
+                            case "numeroCA": numeroCA = 0; break;
                             case "nomeAnimal": nomeAnimal = value; break;
                             case "dataNascimento": dataNascimento = value; break;
                         }
@@ -792,7 +792,7 @@ public class App {
                     throw new Exception("Ligação à BD falhou!");
                 }
 
-                String sql = "INSERT INTO clientes(numeroCA,nomeAnimal,dataNascimento) VALUES (?,?,?)";
+                String sql = "INSERT INTO Animais(numeroCA,nomeAnimal,dataNascimento) VALUES (?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql);
 
                 ps.setInt(1, numeroCA);;
@@ -870,14 +870,14 @@ public class App {
                     throw new Exception("Ligação à BD falhou!");
                 }
 
-                String sql = "SELECT * FROM clientes WHERE id=?";
+                String sql = "SELECT * FROM Animais WHERE id=?";
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setInt(1, id);
 
                 ResultSet rs = ps.executeQuery();
 
                 if (!rs.next()) {
-                    throw new Exception("Cliente não encontrado");
+                    throw new Exception("Animal não encontrado");
                 }
                 int numeroCA  = rs.getInt("numeroCA");
                 String nomeAnimal  = rs.getString("nomeAnimal ");
@@ -1018,7 +1018,7 @@ public class App {
             }
         });
 
-// ELIMINAR CLIENTE
+    // ELIMINAR CLIENTE
         server.createContext("/animaisapagar", exchange -> {
 
             StringBuilder html = new StringBuilder();
