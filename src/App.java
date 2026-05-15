@@ -980,7 +980,7 @@ public class App {
                     throw new Exception("Ligação à BD falhou!");
                 }
 
-                String sql = "UPDATE clientes SET numeroCA=?, nomeAnimal=?, dataNascimento=? WHERE id=?";
+                String sql = "UPDATE Animais SET numeroCA=?, nomeAnimal=?, dataNascimento=? WHERE id=?";
                 PreparedStatement ps = con.prepareStatement(sql);
 
                 ps.setInt(1, numeroCA);
@@ -994,7 +994,7 @@ public class App {
                 con.close();
 
                 // Redirect (melhor UX)
-                exchange.getResponseHeaders().add("Location", "/clientes");
+                exchange.getResponseHeaders().add("Location", "/Animais");
                 exchange.sendResponseHeaders(302, -1);
                 exchange.close();
                 return;
@@ -1063,7 +1063,7 @@ public class App {
                 if (rows > 0) {
                     html.append("""
                         <h2>Animal apagado com sucesso!</h2>
-                        <a href='/clientes'>Voltar à lista</a>
+                        <a href='/animaislista'>Voltar à lista</a>
                     """);
                 } else {
                     html.append("""
